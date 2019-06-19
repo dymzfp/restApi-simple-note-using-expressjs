@@ -28,7 +28,7 @@ exports.showNotes = (req, res) => {
 
     var numPage, limitPage;
 
-    (isEmpty(req.query.page) || req.query.page == '') ? numPage = 1 : numPage = parseInt(req.query.page);
+    (isEmpty(req.query.page) || req.query.page == '' || req.query.page < 1) ? numPage = 1 : numPage = parseInt(req.query.page);
     (isEmpty(req.query.limit) || req.query.limit == '') ? limitPage = 10 : limitPage = parseInt(req.query.limit);
 
     var startPage = (numPage - 1) * limitPage; 
@@ -63,7 +63,7 @@ exports.showNotesSingle = (req, res) => {
     let id = req.params.id;
 
     db.query(
-        `SELECT A.note_id, A.note_title, A.note_notes, A.note_time, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category WHERE A.note_id = ?`,
+        `SELECT A.note_id, A.note_title, A.note_notes, A.created_at, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category WHERE A.note_id = ?`,
         [id],
         (err, result, field) => {
             if (err) {
@@ -88,7 +88,7 @@ exports.showNotesByCategory = (req, res) => {
     let cat_id = req.params.category_id;
 
     db.query(
-        `SELECT A.note_id, A.note_title, A.note_notes, A.note_time, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category WHERE B.category_id = ?`,
+        `SELECT A.note_id, A.note_title, A.note_notes, A.created_at, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category WHERE B.category_id = ?`,
         [cat_id],
         (err, result, fields) => {
             if(err){
