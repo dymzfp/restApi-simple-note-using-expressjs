@@ -108,34 +108,6 @@ exports.showNotesByCategory = (req, res) => {
     )
 }
 
-// search notes
-exports.searchNotes = (req, res) => {
-    let q = req.params.q;
-
-    let search = '%' + q + '%';
-
-    db.query(
-        `SELECT A.note_id, A.note_title, A.note_notes, A.note_time, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category WHERE A.note_title LIKE ?`,
-        [search],
-        (err, result, fields) => {
-            if(err) {
-                re.err(400, res, err);
-            }
-            else{
-                if(result.length == 0){
-                    let msg = "search note success with empty data";
-                    re.ok(200, res, msg);
-                }
-                else{
-                    let msg = "serach note success";
-                    re.ok(200, res, msg, result );
-                }
-            }
-        }
-
-    )
-}
-
 // add notes
 exports.addNotes = (req, res) => {
     let title = req.body.title;
