@@ -111,7 +111,7 @@ exports.addNotes = (req, res) => {
                             }
                             else {
                                 let msg = "add notes success";
-                                re.ok(201, res, msg);
+                                re.ok(200, res, msg);
                             }
                         }
                     )

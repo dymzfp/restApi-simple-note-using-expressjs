@@ -17,7 +17,7 @@ exports.showCategory = (req, res) => {
             }
             else {
                 if(result.length == 0){
-                    let msg = "no data";
+                    let msg = "select category success no data";
 
                     re.ok(200, res, msg);
                 }
@@ -73,7 +73,7 @@ exports.addCategory = (req, res) => {
                                 let msg = "add category success";
                                 let data = resultAdd;
 
-                                re.ok(201, res, msg, data);
+                                re.ok(200, res, msg, data);
                             }
                         }
                     )
