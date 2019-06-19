@@ -31,5 +31,5 @@ module.exports = (app) => {
     // delete notes
     app.delete('/notes/:id', not.deleteNotes);
     // delete notes by category
-    app.delete('/notes/category/:category_id', not.deleteNotesByCategory)
+    app.delete('/notes/category/:category_id', not.deleteNotesByCategory);
 }

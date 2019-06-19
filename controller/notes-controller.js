@@ -9,8 +9,36 @@ const re = require('../response/res');
 
 // show notes
 exports.showNotes = (req, res) => {
+
+    var sql = `SELECT A.note_id, A.note_title, A.note_notes, A.created_at, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category`;
+
+    var dataSql = [];
+
+    if(!isEmpty(req.query.search)){
+        let q = req.query.search;
+        let search = "%"+q+"%";
+        dataSql.push(search);
+        sql += ` WHERE A.note_title LIKE ?`;
+    }
+
+    if(!isEmpty(req.query.sort)){
+        let sort = req.query.sort;
+        sql += ` ORDER BY A.created_at ${sort}`;
+    }
+
+    var numPage, limitPage;
+
+    (isEmpty(req.query.page) || req.query.page == '') ? numPage = 1 : numPage = parseInt(req.query.page);
+    (isEmpty(req.query.limit) || req.query.limit == '') ? limitPage = 10 : limitPage = parseInt(req.query.limit);
+
+    var startPage = (numPage - 1) * limitPage; 
+
+    sql += ` LIMIT ? OFFSET ?`;
+    dataSql.push(limitPage, startPage);
+
     db.query(
-        `SELECT A.note_id, A.note_title, A.note_notes, A.note_time, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category`,
+        sql,
+        dataSql,
         (err, result, field) => {
             if(err){
                 re.err(400, res, err);
@@ -80,6 +108,34 @@ exports.showNotesByCategory = (req, res) => {
     )
 }
 
+// search notes
+exports.searchNotes = (req, res) => {
+    let q = req.params.q;
+
+    let search = '%' + q + '%';
+
+    db.query(
+        `SELECT A.note_id, A.note_title, A.note_notes, A.note_time, A.update_at, B.category_name FROM note A LEFT JOIN category B ON B.category_id = A.note_category WHERE A.note_title LIKE ?`,
+        [search],
+        (err, result, fields) => {
+            if(err) {
+                re.err(400, res, err);
+            }
+            else{
+                if(result.length == 0){
+                    let msg = "search note success with empty data";
+                    re.ok(200, res, msg);
+                }
+                else{
+                    let msg = "serach note success";
+                    re.ok(200, res, msg, result );
+                }
+            }
+        }
+
+    )
+}
+
 // add notes
 exports.addNotes = (req, res) => {
     let title = req.body.title;
@@ -105,13 +161,14 @@ exports.addNotes = (req, res) => {
                     db.query(
                         `SELECT * FROM note WHERE note_id = ?`,
                         [id],
-                        (err, data) => {
+                        (err, dataInr) => {
                             if(err) {
                                 re.err(400, res, err);
                             }
                             else {
                                 let msg = "add notes success";
-                                re.ok(200, res, msg);
+                                let data = dataInr;
+                                re.ok(200, res, msg, data);
                             }
                         }
                     )
