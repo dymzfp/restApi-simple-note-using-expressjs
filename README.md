@@ -14,14 +14,19 @@
  * make file ```.env``` 
  * you can imitate ```.env-semple```
  
- set variables at ```.env```
+ set variables for database connection at ```.env```
  
  ```
  DB_HOST=your-host-mysql
  DB_USER=your-user-mysql
  DB_PASS=your-password-mysql
- DB_DATABASE=your-databse-name
+ DB_NAME=your-databse-name
  ```
  
  import sql file from ```./database/node_app.sql``` to your database
 
+## To test request API
+
+ * open postman
+ * import from ```./test``` to your postman
+ * test request
