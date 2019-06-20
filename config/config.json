@@ -1,0 +1,9 @@
+{
+  "config": {
+    "username": "root",
+    "password": null,
+    "database": "note-app",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

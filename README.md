@@ -14,8 +14,9 @@
 
  * make file ```.env``` 
  * you can imitate ```.env-semple```
- 
- set variables for database connection at ```.env```
+ * create database 
+ * ```sequelize db:migrate``` 
+ * set variables for database connection at ```.env```
  
  ```
  DB_HOST=your-host-mysql
@@ -24,7 +25,7 @@
  DB_NAME=your-databse-name
  ```
  
- import sql file from ```./database/node_app.sql``` to your database
+ import dump data from ```./dumping-data.sql``` to your database
 
 ## To test request API
 
