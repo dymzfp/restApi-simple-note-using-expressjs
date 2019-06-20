@@ -5,5 +5,5 @@ https://github.com/expressjs/cors
 # env
 https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
 
-# iso datestring
-https://github.com/mysqljs/mysql#connection-options
+# sequelize
+http://docs.sequelizejs.com/manual/getting-started.html
