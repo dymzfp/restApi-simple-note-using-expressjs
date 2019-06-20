@@ -14,16 +14,20 @@
 
  * make file ```.env``` 
  * you can imitate ```.env-semple```
- * create database 
- * ```sequelize db:migrate``` 
- * set variables for database connection at ```.env```
+ * create database  
+ 
+ #### set variables for database connection at ```.env```
  
  ```
  DB_HOST=your-host-mysql
  DB_USER=your-user-mysql
  DB_PASS=your-password-mysql
  DB_NAME=your-databse-name
+ DB_DIALECT='mysql'
+
  ```
+
+ * ```sequelize db:migrate```
  
  import dump data from ```./dumping-data.sql``` to your database
 
