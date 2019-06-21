@@ -7,11 +7,11 @@
  * ```cd restApi-simple-note-using-expressjs```
  * ```npm install```
  * set up file .env and database
- * start your mysql server
- * create database 
  
 ## To setup .env and database
 
+ * start your mysql server
+ * create database 
  * make file ```.env``` 
  * you can imitate ```.env-semple``` 
  
