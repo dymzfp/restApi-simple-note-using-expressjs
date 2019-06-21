@@ -8,16 +8,17 @@ const env = require('../config');
 // const env = env_file.NODE_ENV || 'development';
 
 
-const config = require(__dirname + '/../config/config.json')['config'];
+// const config = require(__dirname + '/../config/config.json')['config'];
+
 const db = {};
 
 let sequelize;
 
-const database = env.DB_NAME || config.database;
-const user = env.DB_USER || config.username;
-const pass = env.DB_PASS || config.password;
-const host = env.DB_HOST || config.host;
-const dialect = env.DB_DIALECT || config.dialect;
+const database = env.DB_NAME;
+const user = env.DB_USER;
+const pass = env.DB_PASS;
+const host = env.DB_HOST;
+const dialect = env.DB_DIALECT;
 
 sequelize = new Sequelize(database, user, pass, {
   host: host,
