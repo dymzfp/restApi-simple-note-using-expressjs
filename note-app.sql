@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 21 Jun 2019 pada 01.43
+-- Waktu pembuatan: 21 Jun 2019 pada 03.32
 -- Versi server: 10.3.15-MariaDB
 -- Versi PHP: 7.3.6
 
@@ -19,6 +19,23 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
+-- Database: `note-app`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `categoryName` varchar(30) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Dumping data untuk tabel `categories`
 --
 
@@ -28,6 +45,19 @@ INSERT INTO `categories` (`id`, `categoryName`, `createdAt`, `updatedAt`) VALUES
 (3, 'works', '2019-06-20 16:00:42', '2019-06-20 16:00:42');
 
 -- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `notes`
+--
+
+CREATE TABLE `notes` (
+  `id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `note` text NOT NULL,
+  `categoryId` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `notes`
@@ -48,3 +78,74 @@ INSERT INTO `notes` (`id`, `title`, `note`, `categoryId`, `createdAt`, `updatedA
 (12, 'update title', 'english upadte where from many', 2, '2019-06-20 23:00:38', '2019-06-20 23:04:47');
 
 -- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `SequelizeMeta`
+--
+
+CREATE TABLE `SequelizeMeta` (
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data untuk tabel `SequelizeMeta`
+--
+
+INSERT INTO `SequelizeMeta` (`name`) VALUES
+('20190620130359-create-categories.js'),
+('20190620130717-create-notes.js');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `notes`
+--
+ALTER TABLE `notes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `categoryId` (`categoryId`);
+
+--
+-- Indeks untuk tabel `SequelizeMeta`
+--
+ALTER TABLE `SequelizeMeta`
+  ADD PRIMARY KEY (`name`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `notes`
+--
+ALTER TABLE `notes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `notes`
+--
+ALTER TABLE `notes`
+  ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

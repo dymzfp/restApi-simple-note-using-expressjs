@@ -24,10 +24,8 @@
  "host": "127.0.0.1",
 
  ```
-
- * ```sequelize db:migrate```
  
- import dump data from ```./dumping-data.sql``` to your database
+ import table from ```./note-app.sql``` to your database
  
  * ```npm start``` 
 
