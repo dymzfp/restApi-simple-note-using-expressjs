@@ -15,14 +15,13 @@
  * make file ```.env``` 
  * you can imitate ```.env-semple``` 
  
- #### set variables for database connection at ```.env```
+ #### set variables for database connection at ```./config/config.json```
  
  ```
- DB_HOST=your-host-mysql
- DB_USER=your-user-mysql
- DB_PASS=your-password-mysql
- DB_NAME=your-databse-name
- DB_DIALECT='mysql'
+ "username": "your-username-mysql",
+ "password": "your-password-mysql"
+ "database": "name-your-database",
+ "host": "127.0.0.1",
 
  ```
 

@@ -4,28 +4,16 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const env = require('../config');
-// const env = env_file.NODE_ENV || 'development';
-
-
-// const config = require(__dirname + '/../config/config.json')['config'];
-
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
-
-const database = env.DB_NAME;
-const user = env.DB_USER;
-const pass = env.DB_PASS;
-const host = env.DB_HOST;
-const dialect = env.DB_DIALECT;
-
-sequelize = new Sequelize(database, user, pass, {
-  host: host,
-  dialect: dialect,
-  operatorsAliases: false,
-  dateStrings: true
-});
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
 fs
   .readdirSync(__dirname)
