@@ -13,7 +13,7 @@ exports.getAll = async (req, res) => {
             search: req.query.search
         };
 
-        await servicesNotes.servicesAllCount( query, total => {
+        await servicesNotes.servicesAllCounts( query, total => {
             totalCount = parseInt(total[0].totalPage);
             totalPage = Math.ceil(totalCount / pageLimit);
         });
@@ -97,7 +97,36 @@ exports.getOne = async (req, res) => {
 exports.getByCat = async (req, res) => {
     let categoryId = req.params.categoryId;
     try {
-        await servicesNotes.servicesGetNoteByCat(categoryId, (rows) => {
+        let pageLimit = (isEmpty(req.query.limit)) ? 10 : parseInt(req.query.limit);
+        var totalCount, totalPage;
+        let query = {
+            search: req.query.search
+        };
+
+        await servicesNotes.servicesAllCountsByCat( categoryId, query, total => {
+            totalCount = parseInt(total[0].totalPage);
+            totalPage = Math.ceil(totalCount / pageLimit);
+        });
+        
+        let pageNum;
+        if (isEmpty(req.query.page) || req.query.page < 1) {
+            pageNum = 1;
+        }
+        else if (req.query.page > totalPage) {
+            pageNum = totalPage;
+        }
+        else{
+            pageNum = parseInt(req.query.page);
+        }
+
+        query = {
+            search: req.query.search,
+            sort: req.query.sort,
+            pageNum: pageNum,
+            pageLimit: pageLimit
+        };
+
+        await servicesNotes.servicesGetNoteByCat(categoryId, query, (rows) => {
             if (!rows || !rows.length) {
                 res.status(400).json({
                     status: 'ERROR',
@@ -109,7 +138,12 @@ exports.getByCat = async (req, res) => {
                 res.status(200).json({
                     status: 'OK',
                     message: 'get by category success',
-                    data: rows
+                    data: rows,
+
+                    total: totalCount,
+                    page: pageNum,
+                    totalPage: totalPage,
+                    limit: pageLimit
                 })
             }
         });
