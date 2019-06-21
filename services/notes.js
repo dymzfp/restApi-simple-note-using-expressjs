@@ -20,8 +20,14 @@ exports.servicesGetAllNotes = (query, callback) => {
     })
 }
 
-exports.servicesAllCount = (callback) => {
-    model.sequelize.query(`SELECT COUNT(*) as totalPage FROM notes`).spread(
+exports.servicesAllCount = ( query, callback) => {
+    var search = query.search;
+
+    let sql = `SELECT COUNT(*) as totalPage FROM notes`;
+
+    if(search) sql += ` WHERE notes.title LIKE '%${query.search}%'`;
+   
+    model.sequelize.query(sql).spread(
         data => {
             callback(data);
         }

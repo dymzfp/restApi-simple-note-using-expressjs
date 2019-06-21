@@ -9,7 +9,11 @@ exports.getAll = async (req, res) => {
         let pageLimit = (isEmpty(req.query.limit)) ? 10 : parseInt(req.query.limit);
         var totalCount, totalPage;
 
-        await servicesNotes.servicesAllCount( total => {
+        let query = {
+            search: req.query.search
+        };
+
+        await servicesNotes.servicesAllCount( query, total => {
             totalCount = parseInt(total[0].totalPage);
             totalPage = Math.ceil(totalCount / pageLimit);
         });
@@ -25,7 +29,7 @@ exports.getAll = async (req, res) => {
             pageNum = parseInt(req.query.page);
         }
 
-        let query = {
+        query = {
             search: req.query.search,
             sort: req.query.sort,
             pageNum: pageNum,
