@@ -8,13 +8,12 @@
  * ```npm install```
  * set up file .env and database
  * start your mysql server
- * ```npm start``` 
+ * create database 
  
 ## To setup .env and database
 
  * make file ```.env``` 
- * you can imitate ```.env-semple```
- * create database  
+ * you can imitate ```.env-semple``` 
  
  #### set variables for database connection at ```.env```
  
@@ -30,6 +29,8 @@
  * ```sequelize db:migrate```
  
  import dump data from ```./dumping-data.sql``` to your database
+ 
+ * ```npm start``` 
 
 ## To test request API
 
